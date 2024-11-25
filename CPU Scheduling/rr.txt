@@ -1,0 +1,108 @@
+#include <stdio.h>
+
+struct Process {
+    int pid, at, bt, remainingTime, ft, wt, tat; // Arrival Time (at), Burst Time (bt), Finish Time (ft), Waiting Time (wt), Turnaround Time (tat), Remaining Time (remainingTime)
+};
+
+void roundRobin(struct Process p[], int n, int tq) {
+    int time = 0, completed = 0, totalBt = 0;
+    int totalTat = 0, totalWt = 0;
+    int isCompleted[n]; // To track completion
+    struct GanttChart {
+        int pid, startTime, endTime;
+    } gantt[100]; // Gantt chart array
+    int ganttIndex = 0;
+
+    // Initialize remaining burst times and completion flags
+    for (int i = 0; i < n; i++) {
+        p[i].remainingTime = p[i].bt;
+        isCompleted[i] = 0; // All processes are incomplete initially
+        totalBt += p[i].bt;
+    }
+
+    // Simulate Round Robin execution
+    while (completed != n) {
+        int executed = 0;
+        for (int i = 0; i < n; i++) {
+            if (p[i].at <= time && p[i].remainingTime > 0) {
+                executed = 1;
+                gantt[ganttIndex].pid = p[i].pid;
+                gantt[ganttIndex].startTime = time;
+
+                if (p[i].remainingTime <= tq) {
+                    time += p[i].remainingTime;
+                    p[i].remainingTime = 0;
+                    p[i].ft = time;
+                    p[i].tat = p[i].ft - p[i].at;
+                    p[i].wt = p[i].tat - p[i].bt;
+                    totalTat += p[i].tat;
+                    totalWt += p[i].wt;
+                    completed++;
+                } else {
+                    time += tq;
+                    p[i].remainingTime -= tq;
+                }
+
+                gantt[ganttIndex].endTime = time;
+                ganttIndex++;
+            }
+        }
+        if (!executed) {
+            time++;
+        }
+    }
+
+    // Display Process details
+    printf("\nPID\tAT\tBT\tFT\tTAT\tWT\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, p[i].bt, p[i].ft, p[i].tat, p[i].wt);
+    }
+
+    // Print Gantt chart
+    printf("\nGantt Chart:\n");
+    for (int i = 0; i < ganttIndex; i++) {
+        printf("| P%d ", gantt[i].pid);
+    }
+    printf("|\n");
+
+    // Print the time markers
+    int currentTime = 0;
+    printf("%d", currentTime);
+    for (int i = 0; i < ganttIndex; i++) {
+        for (int j = 0; j < 5; j++) {
+            printf(" ");
+        }
+        currentTime = gantt[i].endTime;
+        printf("%d", currentTime);
+    }
+    printf("\n");
+
+    // Calculate and display total and average times
+    float avgTat = (float)totalTat / n;
+    float avgWt = (float)totalWt / n;
+
+    printf("\nTotal Turnaround Time: %d\n", totalTat);
+    printf("Total Waiting Time: %d\n", totalWt);
+    printf("Average Turnaround Time: %.2f\n", avgTat);
+    printf("Average Waiting Time: %.2f\n", avgWt);
+}
+
+int main() {
+    int n, tq;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    struct Process p[n];
+    for (int i = 0; i < n; i++) {
+        p[i].pid = i + 1;
+        printf("Enter Arrival Time and Burst Time for Process %d: ", i + 1);
+        scanf("%d %d", &p[i].at, &p[i].bt);
+    }
+
+    printf("Enter Time Quantum: ");
+    scanf("%d", &tq);
+
+    roundRobin(p, n, tq);
+
+    return 0;
+}
