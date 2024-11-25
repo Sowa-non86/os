@@ -1,0 +1,27 @@
+Initialize ReadCount to 0
+Initialize Semaphore for Writer (wrt) to 1
+Initialize Semaphore for Mutex to 1
+
+WHILE system is running
+    IF Reader wants to read THEN
+        Wait(Mutex)
+        Increment ReadCount
+        IF ReadCount == 1 THEN
+            Wait(wrt) // First reader blocks writer
+        ENDIF
+        Signal(Mutex)
+        // Reader performs reading
+        Wait(Mutex)
+        Decrement ReadCount
+        IF ReadCount == 0 THEN
+            Signal(wrt) // Last reader unblocks writer
+        ENDIF
+        Signal(Mutex)
+    ENDIF
+
+    IF Writer wants to write THEN
+        Wait(wrt)
+        // Writer performs writing
+        Signal(wrt)
+    ENDIF
+ENDWHILE

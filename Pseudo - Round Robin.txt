@@ -1,0 +1,13 @@
+Initialize Time Quantum
+
+WHILE processes are not finished
+    FOR each process in the queue
+        IF process has arrived THEN
+            Execute process for Time Quantum or until completion
+            Update remaining burst time
+            IF process is not finished THEN
+                Reinsert process at the end of the queue
+            ENDIF
+        ENDIF
+    ENDFOR
+ENDWHILE

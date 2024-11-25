@@ -1,0 +1,13 @@
+Sort processes by arrival time
+
+WHILE processes are not finished
+    FOR each process in sorted list
+        IF process has arrived THEN
+            Execute process for a time quantum
+            Update remaining burst time
+            IF process is not finished THEN
+                Reinsert process at the end of the queue
+            ENDIF
+        ENDIF
+    ENDFOR
+ENDWHILE

@@ -1,0 +1,11 @@
+Initialize Frame Table to empty
+WHILE pages are requested
+    IF page is not in Frame Table THEN
+        IF Frame Table is full THEN
+            Evict least recently used page
+        ENDIF
+        Add new page to Frame Table
+    ELSE
+        Update usage timestamp for page
+    ENDIF
+ENDWHILE

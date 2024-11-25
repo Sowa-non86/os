@@ -1,0 +1,15 @@
+Sort processes by priority (higher priority first)
+
+FOR each process in sorted list
+    IF process has arrived THEN
+        Execute process to completion
+        Calculate completion time, turnaround time, and waiting time
+    ENDIF
+ENDFOR
+
+// Example logic for priority sorting
+Function SortProcessesByPriority(processes):
+    Sort processes based on:
+        1. Higher priority first
+        2. If priorities are equal, sort by arrival time
+    RETURN sorted list

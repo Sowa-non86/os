@@ -1,0 +1,7 @@
+Sort processes by burst time
+
+FOR each process in sorted list
+    IF process has arrived THEN
+        Execute process to completion
+    ENDIF
+ENDFOR

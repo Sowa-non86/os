@@ -1,0 +1,12 @@
+Initialize Frame Table to empty
+Initialize Pointer to the first frame
+
+WHILE pages are requested
+    IF page is not in Frame Table THEN
+        IF Frame Table is full THEN
+            Replace page at Pointer location
+            Move Pointer to next frame
+        ENDIF
+        Add new page to Frame Table
+    ENDIF
+ENDWHILE

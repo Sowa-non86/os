@@ -1,0 +1,22 @@
+Initialize BufferSize to maximum capacity
+Initialize Semaphore full to 0
+Initialize Semaphore empty to BufferSize
+Initialize Mutex semaphore to 1
+
+WHILE system is running
+    IF Producer wants to produce THEN
+        Wait(empty) // Ensure space in buffer
+        Wait(Mutex)
+        Add item to buffer
+        Signal(Mutex)
+        Signal(full) // Notify consumer
+    ENDIF
+
+    IF Consumer wants to consume THEN
+        Wait(full) // Ensure item in buffer
+        Wait(Mutex)
+        Remove item from buffer
+        Signal(Mutex)
+        Signal(empty) // Notify producer
+    ENDIF
+ENDWHILE

@@ -1,0 +1,11 @@
+Sort processes by priority (higher priority first)
+
+WHILE processes are not finished
+    FOR each process in sorted list
+        IF process has arrived THEN
+            Execute process for a time quantum
+            Update remaining burst time
+            Reschedule processes based on priority
+        ENDIF
+    ENDFOR
+ENDWHILE
