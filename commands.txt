@@ -1,0 +1,25 @@
+commands to run shell program in ubuntu
+
+nano script.sh
+chmod +x script.sh
+./script.sh
+
+
+
+commands to run awk program in ubuntu
+
+nano script.awk
+Save and exit the file (in nano, press Ctrl+O, then Enter, and Ctrl+X).
+
+chmod +x script.awk
+
+nano data.txt
+awk -f script.awk data.txt
+
+
+commands to run .c program with mutex and semaphore and pthread in ubuntu
+
+nano pthread_program.c
+gcc pthread_program.c -o pthread_program -pthread
+./pthread_program
+
