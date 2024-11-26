@@ -1,0 +1,16 @@
+Shared Resource
+Initialize mutex
+
+Thread Function(id):
+    Lock(mutex)                // Lock before entering critical section
+    Print "Thread", id, "is running..."
+    Access shared resource
+    Unlock(mutex)              // Unlock after exiting critical section
+End Function
+
+Main Function():
+    Create threads using pthread_create
+    Pass Thread Function and arguments to threads
+    Wait for threads using pthread_join
+    Print "All threads completed"
+End Function

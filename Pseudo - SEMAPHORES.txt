@@ -1,0 +1,22 @@
+Initialize semaphore to N (number of resources)
+
+Function WAIT(semaphore):
+    If semaphore > 0 then:
+        semaphore = semaphore - 1
+    Else:
+        Block the thread
+    End If
+End Function
+
+Function SIGNAL(semaphore):
+    semaphore = semaphore + 1
+    If any thread is blocked then:
+        Wake up one thread
+    End If
+End Function
+
+Thread Function():
+    WAIT(semaphore)            // Request a resource
+    Perform critical section   // Access shared resource
+    SIGNAL(semaphore)          // Release the resource
+End Function

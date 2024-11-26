@@ -1,0 +1,7 @@
+Initialize mutex as unlocked
+
+Thread Function():
+    Lock(mutex)                // Lock before entering critical section
+    Perform critical section   // Shared resource access
+    Unlock(mutex)              // Unlock after exiting critical section
+End Function
