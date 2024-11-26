@@ -1,0 +1,86 @@
+1. Write an awk command to print the lines and line number in the given input file.  
+---> awk '{ print NR, $0 }' input_file
+
+
+2. Write an awk command to print first field and second field only if third field value is 
+>=50 in  
+the given input file. (Input field separator is “,” and output field separator 
+is “,”) 
+---> awk -F',' -v OFS=',' '$3 >= 50 { print $1, $2 }' input_file
+
+
+
+3. Consider the marks.txt is a file that contains one record per line( comma separate 
+fields) of  
+the student data in the form of studentid, student name, Telugu marks, 
+English marks,  
+Maths Marks, Science marks, Social Marks. Write an awk script to 
+generate result for  every students in the form of studentid, studentname, Total Marks 
+and result. Result is  
+PASS if marks is >=30 in TELUGU and English, and if 
+marks>=40 in other subjects.  
+Result is fail otherwise.  
+---> awk -F',' '{
+    total = $3 + $4 + $5 + $6 + $7;
+    if ($3 >= 30 && $4 >= 30 && $5 >= 40 && $6 >= 40 && $7 >= 40) {
+        result = "PASS";
+    } else {
+        result = "FAIL";
+    }
+    print $1, $2, total, result;
+}' marks.txt
+
+
+
+4. Write an awk program to print the fields 1 and 4 of a file that is passed as command 
+line  
+argument. The file contains lines of information that is separated by “,” as 
+delimeter. The awk program must print at the end the average of all 4th field data.  
+---> awk -F',' '{
+    print $1, $4;
+    sum += $4;
+    count++;
+} 
+END { 
+    if (count > 0) 
+        print "Average of 4th field:", sum / count;
+}' input_file
+
+
+
+5. Write an awk program to demonstrate user defined functions and system command. 
+--->  awk 'function lineLength(line) {
+    return length(line);
+}
+{
+    print "Line", NR, "Length:", lineLength($0);
+}
+END {
+    system("echo System command executed");
+}' input_file
+
+
+
+6. Write an awk script to count the number of lines in a file that do not contain vowels.  
+---> awk '{
+    if ($0 !~ /[aeiouAEIOU]/) {
+        count++;
+    }
+}
+END {
+    print "Lines without vowels:", count;
+}' input_file
+
+
+
+7. Write an awk script to find the number of characters, words and lines in a file.
+---> awk '{
+    charCount += length($0) + 1; # +1 for newline
+    wordCount += NF;
+    lineCount++;
+}
+END {
+    print "Characters:", charCount;
+    print "Words:", wordCount;
+    print "Lines:", lineCount;
+}' input_file
